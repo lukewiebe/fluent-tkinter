@@ -1707,10 +1707,8 @@ class TreeviewTest(AbstractWidgetTest, unittest.TestCase):
             open='')
         self.assertRaises(tkinter.TclError, self.tv.insert, '', 'end',
             open='please')
-        # delete() is a void method; with fluent-tkinter it returns self
-        # instead of None, so just verify it doesn't raise.
-        self.tv.delete(self.tv.insert('', 'end', open=True))
-        self.tv.delete(self.tv.insert('', 'end', open=False))
+        self.assertFalse(self.tv.delete(self.tv.insert('', 'end', open=True)))
+        self.assertFalse(self.tv.delete(self.tv.insert('', 'end', open=False)))
 
         # invalid index
         self.assertRaises(tkinter.TclError, self.tv.insert, '', 'middle')

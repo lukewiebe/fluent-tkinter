@@ -45,8 +45,9 @@ _EXCLUDED_METHODS: frozenset[str] = frozenset({
     "select_item",        # None when no canvas item has a text selection
     "type",               # None when tag/ID matches no item
 
-    # Listbox / Menu
+    # Listbox / Menu / Treeview
     "index",              # None for "none" / empty menu
+    "delete",             # stdlib tests assert falsy return
 
     # Scrollbar
     "activate",           # None when no scrollbar element is active (getter)
