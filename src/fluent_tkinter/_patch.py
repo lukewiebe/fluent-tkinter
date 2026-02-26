@@ -37,6 +37,7 @@ _EXCLUDED_METHODS: frozenset[str] = frozenset({
     "pack_propagate",     # same _getboolean issue as grid_propagate
 
     # Aliases shared by Grid / Pack
+    "location",           # alias for grid_location
     "propagate",          # alias for grid_propagate / pack_propagate
     "size",               # alias for grid_size
     "bbox",               # Canvas/Listbox/Text/Spinbox – None when not visible
