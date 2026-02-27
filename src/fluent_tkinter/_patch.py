@@ -76,12 +76,13 @@ def _make_fluent(method):
     return wrapper
 
 
-def _patch_class(cls):
+def _patch_class(cls, extra_excluded=()):
     """Patch all public methods of *cls* that are defined directly on it."""
+    excluded = _EXCLUDED_METHODS | frozenset(extra_excluded)
     for name in list(vars(cls)):
         if name.startswith("_"):
             continue
-        if name in _EXCLUDED_METHODS:
+        if name in excluded:
             continue
         obj = vars(cls)[name]
         if callable(obj) and not isinstance(obj, (classmethod, staticmethod, type)):
@@ -163,7 +164,14 @@ def patch():
         ttk.Treeview,
         ttk.LabeledScale,
         ttk.OptionMenu,
+        ttk.Style,
     ]
 
     for cls in _tkinter_classes + _ttk_classes:
-        _patch_class(cls)
+        if cls is ttk.Style:
+            # Style.configure returns None both as a void setter *and*
+            # as a meaningful "no configuration" query result for unknown
+            # styles — we cannot distinguish the two, so leave it unwrapped.
+            _patch_class(cls, extra_excluded=("configure",))
+        else:
+            _patch_class(cls)
