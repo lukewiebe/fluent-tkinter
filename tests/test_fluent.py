@@ -1071,13 +1071,12 @@ class FluentTtkNotebookTest(AbstractTkTest, unittest.TestCase):
         result = nb.tab(0)
         self.assertIsInstance(result, dict)
 
-    def test_tab_setter_passes_through_tcl_return(self):
-        # tab(idx, **kw) setter uses ``return self.tk.call(...)``.
+    def test_tab_setter_returns_self(self):
         nb = ttk.Notebook(self.root)
         f = ttk.Frame(nb)
         nb.add(f, text='Tab 1')
         result = nb.tab(0, text='Renamed')
-        self.assertIsInstance(result, dict)
+        self.assertIs(result, nb)
 
     def test_notebook_chaining(self):
         nb = ttk.Notebook(self.root)
@@ -1098,11 +1097,10 @@ class FluentTtkTreeviewTest(AbstractTkTest, unittest.TestCase):
         self.assertIsInstance(item, str)
         self.assertTrue(len(item) > 0)
 
-    def test_heading_setter_passes_through_tcl_return(self):
-        # heading() with keyword args uses ``return self.tk.call(...)``.
+    def test_heading_setter_returns_self(self):
         tv = ttk.Treeview(self.root, columns=('name',))
         result = tv.heading('name', text='Name')
-        self.assertIsInstance(result, dict)
+        self.assertIs(result, tv)
 
     def test_heading_getter_returns_dict(self):
         tv = ttk.Treeview(self.root, columns=('name',))
@@ -1110,21 +1108,21 @@ class FluentTtkTreeviewTest(AbstractTkTest, unittest.TestCase):
         result = tv.heading('name')
         self.assertIsInstance(result, dict)
 
-    def test_column_setter_passes_through_tcl_return(self):
+    def test_column_setter_returns_self(self):
         tv = ttk.Treeview(self.root, columns=('name',))
         result = tv.column('name', width=100)
-        self.assertIsInstance(result, dict)
+        self.assertIs(result, tv)
 
     def test_column_getter_returns_dict(self):
         tv = ttk.Treeview(self.root, columns=('name',))
         result = tv.column('name')
         self.assertIsInstance(result, dict)
 
-    def test_item_setter_passes_through_tcl_return(self):
+    def test_item_setter_returns_self(self):
         tv = ttk.Treeview(self.root)
         iid = tv.insert('', 'end', text='item1')
         result = tv.item(iid, text='renamed')
-        self.assertIsInstance(result, dict)
+        self.assertIs(result, tv)
 
     def test_item_getter_returns_dict(self):
         tv = ttk.Treeview(self.root)

@@ -142,10 +142,9 @@ class TtkNotebookMethodsTest(AbstractTkTest, unittest.TestCase):
         result = self.notebook.tab(0)
         self.assertIsInstance(result, dict)
 
-    def test_tab_setter_returns_dict(self):
-        # ttk Notebook.tab(tab_id, **kw) returns {} (empty dict) via _val_or_dict
+    def test_tab_setter_returns_self(self):
         result = self.notebook.tab(0, text="NewTab")
-        self.assertIsInstance(result, dict)
+        self.assertIs(result, self.notebook)
 
     def test_tabs_returns_tuple(self):
         result = self.notebook.tabs()
@@ -177,10 +176,9 @@ class TtkPanedwindowMethodsTest(AbstractTkTest, unittest.TestCase):
         result = self.pw.pane(0)
         self.assertIsInstance(result, dict)
 
-    def test_pane_setter_returns_dict(self):
-        # ttk Panedwindow.pane(child, **kw) returns {} via _val_or_dict
+    def test_pane_setter_returns_self(self):
         result = self.pw.pane(0, weight=1)
-        self.assertIsInstance(result, dict)
+        self.assertIs(result, self.pw)
 
     def test_sashpos_getter_returns_int(self):
         result = self.pw.sashpos(0)
@@ -266,10 +264,9 @@ class TtkTreeviewMethodsTest(AbstractTkTest, unittest.TestCase):
         result = self.tv.column("#0")
         self.assertIsInstance(result, dict)
 
-    def test_column_setter_returns_dict(self):
-        # ttk Treeview.column(col, **kw) returns {} via _val_or_dict
+    def test_column_setter_returns_self(self):
         result = self.tv.column("#0", width=100)
-        self.assertIsInstance(result, dict)
+        self.assertIs(result, self.tv)
 
     def test_exists_returns_bool(self):
         result = self.tv.exists(self.item1)
@@ -293,10 +290,9 @@ class TtkTreeviewMethodsTest(AbstractTkTest, unittest.TestCase):
         result = self.tv.heading("#0")
         self.assertIsInstance(result, dict)
 
-    def test_heading_setter_returns_dict(self):
-        # ttk Treeview.heading(col, **kw) returns {} via _val_or_dict
+    def test_heading_setter_returns_self(self):
         result = self.tv.heading("#0", text="Name")
-        self.assertIsInstance(result, dict)
+        self.assertIs(result, self.tv)
 
     def test_identify_returns_str(self):
         # ttk.Treeview.identify takes (component, x, y), not (x, y)
@@ -327,10 +323,9 @@ class TtkTreeviewMethodsTest(AbstractTkTest, unittest.TestCase):
         result = self.tv.item(self.item1)
         self.assertIsInstance(result, dict)
 
-    def test_item_setter_returns_dict(self):
-        # ttk Treeview.item(item, **kw) returns {} via _val_or_dict
+    def test_item_setter_returns_self(self):
         result = self.tv.item(self.item1, text="Modified")
-        self.assertIsInstance(result, dict)
+        self.assertIs(result, self.tv)
 
     def test_next_returns_str(self):
         result = self.tv.next(self.item1)
@@ -404,10 +399,9 @@ class TtkTreeviewMethodsTest(AbstractTkTest, unittest.TestCase):
         result = self.tv.tag_bind("mytag", "<Button-1>", lambda e: None)
         self.assertIs(result, self.tv)
 
-    def test_tag_configure_setter_returns_dict(self):
-        # ttk Treeview.tag_configure(tag, **kw) returns {} via _val_or_dict
+    def test_tag_configure_setter_returns_self(self):
         result = self.tv.tag_configure("mytag", foreground="red")
-        self.assertIsInstance(result, dict)
+        self.assertIs(result, self.tv)
 
 
 class TtkLabeledScaleMethodsTest(AbstractTkTest, unittest.TestCase):
