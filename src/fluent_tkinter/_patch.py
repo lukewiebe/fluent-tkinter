@@ -66,11 +66,24 @@ _EXCLUDED_METHODS: frozenset[str] = frozenset({
 
 
 def _make_fluent(method):
-    """Wrap *method* so that it returns *self* when the original returns None."""
+    """Wrap *method* so that it returns *self* when the original returns None
+    or an empty dict returned by a setter.
+
+    Standard tkinter configure-like methods (via ``_configure``) return
+    ``None`` in setter mode.  TTK configure-like methods (via
+    ``_val_or_dict``) return ``{}`` in setter mode.  Both cases are
+    intercepted here so that setter calls can be chained.
+
+    The empty-dict check is guarded by ``kwargs`` being non-empty so that
+    legitimate query returns of ``{}`` (e.g. ``grid_info()`` on an
+    un-managed widget) are passed through unchanged.
+    """
     @functools.wraps(method)
     def wrapper(self, *args, **kwargs):
         result = method(self, *args, **kwargs)
         if result is None:
+            return self
+        if result == {} and kwargs:
             return self
         return result
     return wrapper
